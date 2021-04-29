@@ -1,0 +1,9 @@
+html {
+  @include prefix('box-sizing', 'border-box', moz webkit);
+}
+
+*,
+*:before,
+*:after {
+  @include prefix('box-sizing', 'inherit', moz webkit);
+}

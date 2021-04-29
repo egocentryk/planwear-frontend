@@ -1,0 +1,87 @@
+@mixin media_query($width, $type: min) {
+  @if map_has_key($breakpoints, $width) {
+    $width: map_get($breakpoints, $width);
+    @if $type == max {
+      $width: $width - 1px;
+    }
+    @media only screen and (#{$type}-width: $width) {
+      @content;
+    }
+  }
+}
+
+/* usage
+.header {
+  padding: 1em;
+  @include media_query('tablet' {
+    padding: 2em;
+  }
+}
+*/
+
+@mixin clearfix {
+  &:after {
+    content: '';
+    display: table;
+    clear: both;
+  }
+}
+
+/* usage
+.cf {
+  @include clearfix
+}
+*/
+
+@mixin position($position, $args) {
+  @each $o in top right bottom left {
+    $i: index($args, $o);
+    @if $i and $i + 1 <= length($args) and type-of(nth($args, $i + 1)) == number {
+      #{$o}: nth($args, $i + 1);
+    }
+  }
+  position: $position;
+}
+
+// Positioning helpers
+@mixin absolute($args: '') {
+  @include position(absolute, $args);
+}
+
+@mixin fixed($args: '') {
+  @include position(fixed, $args);
+}
+
+@mixin relative($args: '') {
+  @include position(relative, $args);
+}
+
+/* usage
+.menu {
+  @include absolute(top 100% left 0);
+}
+*/
+
+@mixin prefix($property, $value, $vendors: webkit moz ms o, $default: true) {
+  @if $vendors {
+    @each $vendor in $vendors {
+      #{"-" + $vendor + "-" + $property}: #{$value};
+    }
+  }
+  @if $default {
+    #{$property}: #{$value};
+  }
+}
+
+@mixin vertical_center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  @include prefix(transform, translate(-50%, -50%), 'webkit' 'ms');
+}
+
+/* usage
+.vc {
+  @include vertical_center;
+}
+*/

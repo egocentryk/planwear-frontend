@@ -1,8 +1,10 @@
+@charset "utf-8";
+
 @import
-  'utils/variables',
-  'utils/functions',
-  'utils/mixins',
-  'utils/placeholders';
+  'abstracts/variables',
+  'abstracts/functions',
+  'abstracts/mixins',
+  'abstracts/placeholders';
 
 @import
   'vendors/bootstrap';
