@@ -13,7 +13,7 @@
 /* usage
 .header {
   padding: 1em;
-  @include media_query('tablet' {
+  @include media_query('tablet') {
     padding: 2em;
   }
 }
@@ -85,3 +85,48 @@
   @include vertical_center;
 }
 */
+
+@mixin ratio($x,$y, $pseudo: false) {
+  $padding: unquote( ( $y / $x ) * 100 + '%' );
+  @if $pseudo {
+    &:before {
+      @include pseudo($pos: relative);
+      width: 100%;
+      padding-top: $padding;
+    }
+  } @else {
+    padding-top: $padding;
+  }
+}
+
+/* usage
+img {
+  @include ratio(16, 9)
+}
+*/
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+ 
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ 
+@mixin flex-center-column {
+  @include flex-center;
+  flex-direction: column;
+}
+ 
+@mixin flex-center-vert {
+  display: flex;
+  align-items: center;
+}
+ 
+@mixin flex-center-horiz {
+  display: flex;
+  justify-content: center;
+}
